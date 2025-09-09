@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../core/app_colors.dart';
-import '../core/app_fonts.dart';
+import 'package:edisapp/core/app_colors.dart';
+import 'package:edisapp/core/app_fonts.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});

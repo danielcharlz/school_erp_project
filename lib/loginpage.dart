@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:edisapp/core/app_colors.dart';
 import 'package:edisapp/core/app_fonts.dart';
-import 'dashboard.dart'; // Import the dashboard page
+import 'pages/parent_page/dashboard.dart';// Import the dashboard page
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
