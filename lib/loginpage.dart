@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:edisapp/core/app_colors.dart';
 import 'package:edisapp/core/app_fonts.dart';
-import 'pages/parent_page/dashboard.dart';// Import the dashboard page
+import 'pages/parent_page/dashboard.dart'; // Import the dashboard page
+import 'pages/admin_page/admin_dashboard.dart'; // Import the admin dashboard page
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -37,7 +38,12 @@ class _LoginPageState extends State<LoginPage> {
           context,
           MaterialPageRoute(builder: (_) => const DashboardPage()),
         );
-      } else {
+      } 
+      else if (username == "admin" && password == "admin") {
+        // Navigate to Admin Dashboard (to be implemented)
+       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const AdminDashboard()));
+      }
+      else {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text("Invalid credentials")));
@@ -62,7 +68,11 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 padding: const EdgeInsets.all(20),
-                child: const Icon(Icons.school, size: 80, color: AppColors.primaryBlue),
+                child: const Icon(
+                  Icons.school,
+                  size: 80,
+                  color: AppColors.primaryBlue,
+                ),
               ),
               const SizedBox(height: 20),
 
@@ -78,8 +88,13 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: "Username",
-                  labelStyle: AppFonts.menuTitle.copyWith(color: Colors.grey[700]),
-                  prefixIcon: const Icon(Icons.person, color: AppColors.primaryBlue),
+                  labelStyle: AppFonts.menuTitle.copyWith(
+                    color: Colors.grey[700],
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.person,
+                    color: AppColors.primaryBlue,
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: AppColors.primaryBlue),
                     borderRadius: BorderRadius.circular(12),
@@ -97,8 +112,13 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Password",
-                  labelStyle: AppFonts.menuTitle.copyWith(color: Colors.grey[700]),
-                  prefixIcon: const Icon(Icons.lock, color: AppColors.primaryBlue),
+                  labelStyle: AppFonts.menuTitle.copyWith(
+                    color: Colors.grey[700],
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: AppColors.primaryBlue,
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: AppColors.primaryBlue),
                     borderRadius: BorderRadius.circular(12),
@@ -112,12 +132,17 @@ class _LoginPageState extends State<LoginPage> {
 
               // Login Button
               _isLoading
-                  ? const CircularProgressIndicator(color: AppColors.primaryBlue)
+                  ? const CircularProgressIndicator(
+                      color: AppColors.primaryBlue,
+                    )
                   : ElevatedButton(
                       onPressed: _login,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryBlue,
-                        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 14),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 80,
+                          vertical: 14,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
