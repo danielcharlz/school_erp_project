@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/app_theme.dart';
-import 'models/loginpage.dart';
+import 'pages/loginpage.dart';
 
 void main() {
   runApp(const StudentERPApp());
