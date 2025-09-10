@@ -12,8 +12,18 @@ class AdminDashboard extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primaryBlue,
         elevation: 0,
-        title: Text("Admin Dashboard",
-            style: AppFonts.profileName.copyWith(color: Colors.white)),
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.white),
+          onPressed: () {},
+        ),
+        title: Text(
+          "Dashboard",
+          style: AppFonts.profileName.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
         actions: const [
           Icon(Icons.notifications_none, color: Colors.white),
           SizedBox(width: 12),
@@ -22,51 +32,112 @@ class AdminDashboard extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --------- Section 1 ----------
-            Text("General", style: AppFonts.sectionTitle),
-            const SizedBox(height: 12),
-            _buildMenuGrid([
-              {"title": "School Notice Board", "icon": Icons.dashboard, "color": Colors.blue},
-              {"title": "Events", "icon": Icons.event, "color": Colors.orange},
-              {"title": "Staff Birthday List", "icon": Icons.celebration, "color": Colors.purple},
-              {"title": "Student Birthday List", "icon": Icons.cake, "color": Colors.pink},
-              {"title": "Calendar", "icon": Icons.calendar_month, "color": Colors.teal},
-              {"title": "Quotes", "icon": Icons.format_quote, "color": Colors.indigo},
-            ]),
-
+            _buildSection(
+              title: "General",
+              menus: [
+                {"title": "School Notice Board", "icon": Icons.dashboard},
+                {"title": "Events", "icon": Icons.event},
+                {"title": "Staff Birthday List", "icon": Icons.celebration},
+                {"title": "Student Birthday List", "icon": Icons.cake},
+                {"title": "Calendar", "icon": Icons.calendar_month},
+                {"title": "Quotes", "icon": Icons.format_quote},
+              ],
+            ),
             const SizedBox(height: 20),
-
-            // --------- Section 2 ----------
-            Text("Finance Reports", style: AppFonts.sectionTitle),
-            const SizedBox(height: 12),
-            _buildMenuGrid([
-              {"title": "Fee Report", "icon": Icons.receipt_long, "color": Colors.green},
-              {"title": "Head-wise Collection", "icon": Icons.account_balance_wallet, "color": Colors.deepOrange},
-              {"title": "Date-wise Collection", "icon": Icons.date_range, "color": Colors.cyan},
-              {"title": "Year-wise Collection", "icon": Icons.bar_chart, "color": Colors.deepPurple},
-              {"title": "Advance Amount Report", "icon": Icons.account_balance, "color": Colors.brown},
-            ]),
-
+            _buildSection(
+              title: "Finance Reports",
+              menus: [
+                {"title": "Fee Report", "icon": Icons.receipt_long},
+                {"title": "Head-wise Collection", "icon": Icons.account_balance_wallet},
+                {"title": "Date-wise Collection", "icon": Icons.date_range},
+                {"title": "Year-wise Collection", "icon": Icons.bar_chart},
+                {"title": "Advance Amount Report", "icon": Icons.account_balance},
+              ],
+            ),
             const SizedBox(height: 20),
-
-            // --------- Section 3 ----------
-            Text("Dashboards", style: AppFonts.sectionTitle),
-            const SizedBox(height: 12),
-            _buildMenuGrid([
-              {"title": "Staff Dashboard", "icon": Icons.people_alt, "color": Colors.blueGrey},
-              {"title": "Student Dashboard", "icon": Icons.school, "color": Colors.lightBlue},
-              {"title": "Super Admin Dashboard", "icon": Icons.supervisor_account, "color": Colors.amber},
-              {"title": "Certificates", "icon": Icons.card_membership, "color": Colors.pinkAccent},
-              {"title": "Role-Based Dashboard", "icon": Icons.admin_panel_settings, "color": Colors.red},
-            ]),
+            _buildSection(
+              title: "Dashboards",
+              menus: [
+                {"title": "Staff Dashboard", "icon": Icons.people_alt},
+                {"title": "Student Dashboard", "icon": Icons.school},
+                {"title": "Super Admin Dashboard", "icon": Icons.supervisor_account},
+                {"title": "Certificates", "icon": Icons.card_membership},
+                {"title": "Role-Based Dashboard", "icon": Icons.admin_panel_settings},
+              ],
+            ),
           ],
+        ),
+      ),
+
+      // -------- Scrollable Bottom Bar --------
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 4,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              _bottomNavItem(Icons.home, "Dashboard"),
+              _bottomNavItem(Icons.fact_check, "Attendance",),
+              _bottomNavItem(Icons.assignment, "Exams"),
+              _bottomNavItem(Icons.payments, "Fees"),
+              _bottomNavItem(Icons.directions_bus, "Transport"),
+              _bottomNavItem(Icons.library_books, "Library"),
+              _bottomNavItem(Icons.message, "Communication"),
+              _bottomNavItem(Icons.school, "Learning"),
+              _bottomNavItem(Icons.more_horiz, "More"),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  // ---- Section Builder ----
+  Widget _buildSection({required String title, required List<Map<String, dynamic>> menus}) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: const Offset(2, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: AppFonts.sectionTitle.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: AppColors.primaryBlue,
+            ),
+          ),
+          const SizedBox(height: 12),
+          _buildMenuGrid(menus),
+        ],
+      ),
+    );
+  }
+
+  // ---- Grid Builder ----
   Widget _buildMenuGrid(List<Map<String, dynamic>> menus) {
     return GridView.builder(
       itemCount: menus.length,
@@ -83,7 +154,6 @@ class AdminDashboard extends StatelessWidget {
         return _DashboardCard(
           title: menu["title"],
           icon: menu["icon"],
-          color: menu["color"],
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("${menu['title']} clicked")),
@@ -93,18 +163,41 @@ class AdminDashboard extends StatelessWidget {
       },
     );
   }
+
+  // ---- Bottom Navigation Item ----
+  Widget _bottomNavItem(IconData icon, String label) {
+    return GestureDetector(
+      onTap: () {
+        // Handle navigation
+        
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 24, color: AppColors.primaryBlue),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(fontSize: 12, color: Colors.black87),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
+// ---- Card ----
 class _DashboardCard extends StatelessWidget {
   final String title;
   final IconData icon;
-  final Color color;
   final VoidCallback onTap;
 
   const _DashboardCard({
     required this.title,
     required this.icon,
-    required this.color,
     required this.onTap,
   });
 
@@ -115,36 +208,32 @@ class _DashboardCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 6,
-              offset: const Offset(2, 4),
-            ),
-          ],
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Colors.grey.shade200),
         ),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 48,
-              width: 48,
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(icon, size: 28, color: color),
-            ),
-            const SizedBox(height: 8),
+            // Title first
             Text(
               title,
               style: AppFonts.menuTitle.copyWith(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
                 color: Colors.black87,
               ),
               textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 8),
+
+            // Small icon below
+            Icon(
+              icon,
+              size: 22,
+              color: AppColors.primaryBlue,
             ),
           ],
         ),
