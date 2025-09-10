@@ -31,7 +31,7 @@ class DashboardPage extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.primaryBlue.withOpacity(0.3),
-                    blurRadius: 8,
+                    blurRadius: 10,
                     offset: const Offset(0, 4),
                   )
                 ],
